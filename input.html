@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<br >
+    <button onclick="getGameData" >Start the game</button>
+    <div>
+        <br>
+        <h1>Please Chose a side</h1>
+        <h2 style="display: inline;" id='Xplayer' onclick="pickASide(id)">X  / </h2>
+         <h2 style="display: inline;"  onclick="pickASide(id)" id='0player'>O</h2>
+    </div>
+    <br>
+    <!-- QUAL ELEMENTO FOI ESCOLHIDO X OR O -->
+    <div>You chose =><span id='whoIsPlaying'></span></div>
+    <div>Turn =><span id='whoTurn'></span></div>
+    <div class="game-board">
+        <div style="margin: 30px ;" id='divFirstRow'></div>
+        <div style="margin: 30px;" id='divSecondRow'></div>   
+        <div style="margin: 30px;" id='divThirdRow'></div>   
+    </div>
+    
+</br>
+<div><h3>The results are:<span id='resultsSpan'></span></h3></div>
+<h2>Reset the game</h2>
+    <script src="script.js"></script>
+</body>
+</html>

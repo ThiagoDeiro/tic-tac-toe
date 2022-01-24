@@ -1,0 +1,32 @@
+.boxEl {
+  border: 0.5px solid rgb(0, 0, 0);
+  border-top: none;
+  border-left: none;
+  margin: 0;
+  padding: 20px;
+  font-size: 18px;
+}
+
+[id="0"] {
+  border-left: none;
+  border-top: none;
+}
+
+[id="2"] {
+  border-right: none;
+}
+[id="5"] {
+  border-right: none;
+}
+[id="6"] {
+  border-bottom: none;
+}
+[id="7"] {
+  border-bottom: none;
+  border-bottom: none;
+}
+
+[id="8"] {
+  border-right: none;
+  border-bottom: none;
+}
