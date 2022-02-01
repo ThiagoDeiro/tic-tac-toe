@@ -9,7 +9,6 @@ let oUnderline = document.getElementById("ifElementIsOStyle");
 let restartButton = document.getElementById("restartTheGameButton");
 // Modal elements!!!
 let myModal = document.getElementById("myModal");
-
 let modalSpan = document.getElementById("closeMyModal", [0]);
 let modalText = document.getElementById("modalText");
 
@@ -24,6 +23,8 @@ let playerThatWasPicked;
 
 let xPosition = [];
 let oPosition = [];
+
+let hasAWinner;
 
 let winningPoss = [
   [0, 1, 2],
@@ -100,13 +101,15 @@ function gamePlay(e) {
     let numberArrO = oPosition.map((i) => Number(i));
     for (let j = 0; j < winningPoss.length; j++) {
       if (winningPoss[j].every((i) => numberArrX.includes(i))) {
+        hasAWinner = true;
         setTimeout(() => {
           checkWinner(textX);
-        }, 1000);
+        }, 500);
       } else if (winningPoss[j].every((i) => numberArrO.includes(i))) {
+        hasAWinner = true;
         setTimeout(() => {
           checkWinner(textO);
-        }, 1000);
+        }, 500);
       } else if (
         numberArrX.length >= 5 &&
         !winningPoss[j].every(
@@ -116,9 +119,10 @@ function gamePlay(e) {
               winningPoss[j].every((r) => numberArrO.includes(r)))
         )
       ) {
+        hasAWinner = true;
         setTimeout(() => {
           checkWinner(itsATie);
-        }, 1000);
+        }, 500);
       } else if (
         numberArrO.length >= 5 &&
         !winningPoss[j].every(
@@ -128,11 +132,18 @@ function gamePlay(e) {
               winningPoss[j].every((r) => numberArrX.includes(r)))
         )
       ) {
+        hasAWinner = true;
         setTimeout(() => {
           checkWinner(itsATie);
-        }, 1000);
+        }, 500);
       }
     }
+  }
+  // this if statement is to check if we have a winner and if we do remove onclick event from all cells!
+  if (hasAWinner === true) {
+    allCell.forEach((cell) => {
+      cell.removeEventListener("click", gamePlay);
+    });
   }
 }
 
