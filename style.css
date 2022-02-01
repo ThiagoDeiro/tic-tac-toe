@@ -1,32 +1,181 @@
-.boxEl {
-  border: 0.5px solid rgb(0, 0, 0);
-  border-top: none;
-  border-left: none;
-  margin: 0;
+body {
+  font-family: "Chakra Petch", sans-serif;
+  background-color: black;
+  color: white;
+  overflow-x: hidden;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+.header {
+  margin-top: 1rem;
+  display: flex;
+  font-size: 1.5rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.firstContainer {
+  height: 100vh;
+  /* width: 100vw; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  scroll-behavior: smooth;
+}
+.startButton {
+  text-align: center;
+  font-size: 5em;
+  color: #c8af55;
+  font-weight: 700;
+}
+.buttonText {
+  font-size: 2rem;
+  text-decoration: none;
+}
+a {
+  color: inherit;
+}
+.buttonText:hover {
+  cursor: pointer;
+  display: inline;
+}
+.arrow {
+  display: none;
+}
+.buttonText:hover .arrow {
+  display: inline-block;
+  cursor: pointer;
+}
+
+#pickAsideSection {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.pickASideTitle {
+  font-size: 5rem;
+}
+.pickASideText {
+  font-size: 5rem;
+  margin: 20px;
+  text-decoration: none;
+}
+.pickASideText:hover {
+  cursor: pointer;
+}
+.gameBoardSection {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+}
+.gameBoardSectionPosition {
+  text-align: center;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
+.turnContainer {
+  margin-bottom: 100px;
+  font-size: 5rem;
+}
+.underline {
+  text-decoration: none;
+}
+.whosTurnIs {
+  display: none;
+}
+.gameBoard {
+  display: grid;
+  grid-template-columns: 20vw 20vw 20vw;
+  grid-template-rows: 20vh 20vh 20vh;
+  grid-column-gap: 0.3em;
+  grid-row-gap: 0.3em;
+}
+
+.gameBoard > div {
+  text-align: center;
+  background-color: #a5ffff;
+  font-size: 5rem;
+  color: black;
+
+  /* padding: 1em; */
+}
+
+.gameBoard > div:nth-child() {
+  background: ddd;
+}
+
+/* Modal css below */
+
+.modalBox {
+  display: flex;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+  background-color: white;
+  box-shadow: 2px 3px 8px -1px lightgray;
+  margin: 15% auto;
   padding: 20px;
-  font-size: 18px;
+  border-radius: 10px;
+  width: 30%;
 }
 
-[id="0"] {
-  border-left: none;
-  border-top: none;
+.closeModal {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
-[id="2"] {
-  border-right: none;
+.closeModal:hover,
+.closeModal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
-[id="5"] {
-  border-right: none;
+.restartTheGameButton {
+  border: 3px solid black;
+  background-color: lightgray;
+  box-shadow: 2px 3px 8px -1px rgb(12, 12, 12);
+  width: 200px;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 5px;
+  text-align: center;
 }
-[id="6"] {
-  border-bottom: none;
-}
-[id="7"] {
-  border-bottom: none;
-  border-bottom: none;
-}
-
-[id="8"] {
-  border-right: none;
-  border-bottom: none;
+.restartTheGameButton:hover {
+  cursor: pointer;
+  border: 3px solid black;
+  background-color: lightgray;
+  box-shadow: 2px 2px 8px -3px rgb(12, 12, 12);
+  width: 199px;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 5px;
+  text-align: center;
 }

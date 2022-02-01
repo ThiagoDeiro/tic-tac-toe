@@ -5,29 +5,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;1,300;1,700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c5a470c8a4.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
-<br >
-    <button onclick="getGameData" >Start the game</button>
-    <div>
-        <br>
-        <h1>Please Chose a side</h1>
-        <h2 style="display: inline;" id='Xplayer' onclick="pickASide(id)">X  / </h2>
-         <h2 style="display: inline;"  onclick="pickASide(id)" id='0player'>O</h2>
+<body>
+    <header class="header">
+        <span>1UP</span>
+        <span>HIGH SCORE</span>
+        <span>2UP</span>
+    </header>
+    <div class="firstContainer">
+        <span class="startButton">Tic-tac-toe</span>
+        <a href="#pickAsideSection" class="buttonText"> <span class="arrow" ><i class="fas fa-angle-right"></i></span> Start</a>
+        <span class="buttonText"> 1 Player only</span>
     </div>
-    <br>
-    <!-- QUAL ELEMENTO FOI ESCOLHIDO X OR O -->
-    <div>You chose =><span id='whoIsPlaying'></span></div>
-    <div>Turn =><span id='whoTurn'></span></div>
-    <div class="game-board">
-        <div style="margin: 30px ;" id='divFirstRow'></div>
-        <div style="margin: 30px;" id='divSecondRow'></div>   
-        <div style="margin: 30px;" id='divThirdRow'></div>   
+    <div tabindex="-1" id='pickAsideSection'>
+        <h1 class="pickASideTitle" >Pick a side</h1>
+        <div>
+            <a href="#gameBoardSection" class="pickASideText" id='xTurn'>X</a>
+            <a href="#gameBoardSection" class="pickASideText" id='oTurn'>O</a>
+        </div>
     </div>
-    
-</br>
-<div><h3>The results are:<span id='resultsSpan'></span></h3></div>
-<h2>Reset the game</h2>
+    <div tabindex="-1" class="gameBoardSection" id='gameBoardSection'>
+        <div class="gameBoardSectionPosition">
+            <div class="turnContainer">
+                <span id='ifElementIsXStyle' class="underline">X</span>
+                <span id='ifElementIsOStyle'class="underline">O</span> 
+                <span id='whosTurn' class="whosTurnIs"></span>
+            </div>
+            <div class="gameBoard">
+                <div class="cell" data-cell id=0></div>
+                <div class="cell" data-cell id=1></div>
+                <div class="cell" data-cell id=2></div>
+                <div class="cell" data-cell id=3></div>
+                <div class="cell" data-cell id=4></div>
+                <div class="cell" data-cell id=5></div>
+                <div class="cell" data-cell id=6></div>
+                <div class="cell" data-cell id=7></div>
+                <div class="cell" data-cell id=8></div>
+            </div>
+        </div>
+    </div>
+    <div class="modalBox">
+        <div id='myModal' class="modal">
+            <div class='modalContent'>
+                <div><span class="closeModal" id='closeMyModal'>&times;</span></div>
+                <h1 id='modalText'></h1>
+                <a href="#pickAsideSection" class="restartTheGameButton" id='restartTheGameButton' onclick="restartTheGame()">Restart the game</a>
+            </div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

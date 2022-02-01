@@ -1,6 +1,29 @@
-let firstRow = [0, 1, 2];
-let secondRow = [3, 4, 5];
-let thirdRow = [6, 7, 8];
+let allCell = document.querySelectorAll("[data-cell]");
+let xPlay = document.getElementById("xTurn");
+let oPlay = document.getElementById("oTurn");
+let turnText = document.getElementById("whosTurn");
+let spanTurn = document.getElementById("whosTurn");
+const winner = document.getElementById("winner");
+let xUnderline = document.getElementById("ifElementIsXStyle");
+let oUnderline = document.getElementById("ifElementIsOStyle");
+let restartButton = document.getElementById("restartTheGameButton");
+// Modal elements!!!
+let myModal = document.getElementById("myModal");
+
+let modalSpan = document.getElementById("closeMyModal", [0]);
+let modalText = document.getElementById("modalText");
+
+let spanX = document.createElement("span");
+let spanO = document.createElement("span");
+
+let player;
+let playerX;
+let playerO;
+
+let playerThatWasPicked;
+
+let xPosition = [];
+let oPosition = [];
 
 let winningPoss = [
   [0, 1, 2],
@@ -12,136 +35,125 @@ let winningPoss = [
   [0, 4, 8],
   [2, 4, 6],
 ];
-let xArray = [];
-let oArray = [];
 
-let firstPLayer;
+xPlay.addEventListener("click", pickASide);
+oPlay.addEventListener("click", pickASide);
 
-let pickSide;
+allCell.forEach((cell) => {
+  cell.addEventListener("click", gamePlay);
+});
 
-let whoTurnIs;
-
-const renderData = () => {
-  let firstR = document.getElementById("divFirstRow");
-  let secondR = document.getElementById("divSecondRow");
-  let thirdR = document.getElementById("divThirdRow");
-
-  let first;
-  let second;
-  let third;
-
-  for (let i = 0; i < firstRow.length; i++) {
-    first = firstRow[i];
-    second = secondRow[i];
-    third = thirdRow[i];
-
-    let a1 = document.createElement("a");
-    a1.setAttribute("id", `${first}`);
-    a1.setAttribute("class", `${i}`);
-    a1.setAttribute("class", "boxEl");
-    a1.setAttribute("onclick", `getPositionValue(${i}, id)`);
-    // a1.innerHTML = first;
-
-    let a2 = document.createElement("a");
-    a2.setAttribute("id", `${second}`);
-    a2.setAttribute("class", "boxEl");
-    a2.setAttribute("onclick", `getPositionValue(${i}, id)`);
-    // a2.innerHTML = second;
-
-    let a3 = document.createElement("a");
-    a3.setAttribute("id", `${third}`);
-    a3.setAttribute("class", "boxEl");
-    a3.setAttribute("onclick", `getPositionValue(${i}, id)`);
-    // a3.innerHTML = third;
-
-    firstR.appendChild(a1);
-    secondR.appendChild(a2);
-    thirdR.appendChild(a3);
+function pickASide(e) {
+  const side = e.target.textContent;
+  if (side === "X") {
+    playerX = side;
+    player = playerX;
+    playerThatWasPicked = "X";
+  } else if (side === "O") {
+    playerO = side;
+    player = playerO;
+    playerThatWasPicked = "O";
   }
-};
-renderData();
+  turnText.innerHTML = player === "X" ? "O" : "X";
 
-const pickASide = (id) => {
-  let span = document.getElementById("whoIsPlaying");
-  let turn = document.getElementById("whoTurn");
+  if (playerThatWasPicked === "X") {
+    xUnderline.style.textDecoration = "none";
+    oUnderline.style.textDecoration = "underline";
+  } else if (playerThatWasPicked === "O") {
+    xUnderline.style.textDecoration = "underline";
+    oUnderline.style.textDecoration = "none";
+  }
+}
 
-  let choseA = id;
+function gamePlay(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const cell = e.target;
+  cell.removeEventListener("click", gamePlay);
 
-  let xSelector = "Xplayer";
-  firstPLayer = xSelector;
-  firstPLayer = "X";
+  const textX = "X is the winner";
+  const textO = "O is the winner";
+  const itsATie = "It's a tie";
 
-  let oSelector = "0player";
+  player = player === "X" ? "O" : "X";
+  turnText.innerHTML = player === "X" ? "O" : "X";
+  cell.innerHTML = player;
 
-  if (choseA === xSelector) {
-    pickSide = firstPLayer;
-  } else if (choseA === oSelector) {
-    pickSide = "O";
+  if (turnText.textContent === "X") {
+    xUnderline.style.textDecoration = "underline";
+    oUnderline.style.textDecoration = "none";
+  } else if (turnText.textContent === "O") {
+    xUnderline.style.textDecoration = "none";
+    oUnderline.style.textDecoration = "underline";
   }
 
-  whoTurnIs = pickSide;
-  span.innerHTML = pickSide;
-  turn.innerHTML = whoTurnIs === "X" ? "O" : "X";
-};
-
-const getPositionValue = (i, id) => {
-  let el = document.getElementById(`${id}`);
-  whoTurnIs = whoTurnIs !== "X" ? firstPLayer : "O";
-  el.innerHTML = whoTurnIs;
-  // turn.innerHTML = whoTurnIs || whoTurnIs;
-  if (whoTurnIs === "X") {
-    xArray.push(id);
-    console.log(xArray);
-  } else if (whoTurnIs === "O") {
-    oArray.push(id);
+  if (cell.textContent === "X") {
+    xPosition.push(cell.id);
+    console.log(xPosition);
+  } else if (cell.textContent === "O") {
+    oPosition.push(cell.id);
+    console.log(oPosition);
   }
-  checkWinner();
-};
 
-const checkWinner = () => {
-  let resultSpan = document.getElementById("resultsSpan");
-  let items = [];
-  items = winningPoss;
-  let results;
-
-  console.log(xArray);
-  let numericArrx = xArray.map((i) => Number(i));
-  let numericArro = oArray.map((i) => Number(i));
-
-  for (let y = 0; y < items.length; y++) {
-    if (xArray.length >= 3 && items[y].every((i) => numericArrx.includes(i))) {
-      results = `X is the winner`;
-      console.log(xArray);
-    } else if (
-      oArray.length >= 3 &&
-      items[y].every((r) => numericArro.includes(r))
-    ) {
-      results = `O is the winner`;
-      console.log(oArray);
-    } else if (
-      xArray.length >= 5 &&
-      !items[y].every(
-        (r) =>
-          numericArrx.includes(r) ||
-          (oArray.length >= 3 && items[y].every((r) => numericArro.includes(r)))
-      )
-    ) {
-      results = `it's a tie`;
-      console.log(`it's a tie`);
-    } else if (
-      oArray.length >= 5 &&
-      !items[y].every(
-        (r) =>
-          numericArro.includes(r) ||
-          (xArray.length >= 3 && items[y].every((r) => numericArrx.includes(r)))
-      )
-    ) {
-      results = `it's a tie`;
-      console.log(`it's a tie`);
+  if (xPosition.length >= 3 || oPosition.length >= 3) {
+    let numberArrX = xPosition.map((i) => Number(i));
+    let numberArrO = oPosition.map((i) => Number(i));
+    for (let j = 0; j < winningPoss.length; j++) {
+      if (winningPoss[j].every((i) => numberArrX.includes(i))) {
+        setTimeout(() => {
+          checkWinner(textX);
+        }, 1000);
+      } else if (winningPoss[j].every((i) => numberArrO.includes(i))) {
+        setTimeout(() => {
+          checkWinner(textO);
+        }, 1000);
+      } else if (
+        numberArrX.length >= 5 &&
+        !winningPoss[j].every(
+          (r) =>
+            numberArrX.includes(r) ||
+            (oPosition.length >= 3 &&
+              winningPoss[j].every((r) => numberArrO.includes(r)))
+        )
+      ) {
+        setTimeout(() => {
+          checkWinner(itsATie);
+        }, 1000);
+      } else if (
+        numberArrO.length >= 5 &&
+        !winningPoss[j].every(
+          (r) =>
+            numberArrO.includes(r) ||
+            (numberArrX.length >= 3 &&
+              winningPoss[j].every((r) => numberArrX.includes(r)))
+        )
+      ) {
+        setTimeout(() => {
+          checkWinner(itsATie);
+        }, 1000);
+      }
     }
   }
+}
 
-  if (results !== undefined) {
-    resultSpan.innerHTML = results;
+function checkWinner(text) {
+  modalText.innerHTML = text;
+  return (myModal.style.display = "block");
+}
+modalSpan.onclick = function () {
+  myModal.style.display = "none";
+};
+
+window.onclick = function (e) {
+  if (e.target == myModal) {
+    myModal.style.display = "none";
   }
 };
+
+function restartTheGame() {
+  myModal.style.display = "none";
+  console.log(restartButton.href);
+  setTimeout(() => {
+    window.location.reload();
+  }, 1000);
+}
