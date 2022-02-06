@@ -19,8 +19,8 @@
     </header>
     <div class="firstContainer">
         <span class="startButton">Tic-tac-toe</span>
-        <a href="#pickAsideSection" class="buttonText"> <span class="arrow" ><i class="fas fa-angle-right"></i></span> Start</a>
-        <span class="buttonText"> 1 Player only</span>
+        <a href="#pickAsideSection" id="player2" class="buttonText"> <span class="arrow" ><i class="fas fa-angle-right"></i></span> Start</a>
+        <a href="#pickAsideSection" id='player1' class="buttonText"> <span class="arrow" ><i class="fas fa-angle-right"></i></span> 1 Player only</a>
     </div>
     <div tabindex="-1" id='pickAsideSection'>
         <h1 class="pickASideTitle" >Pick a side</h1>
@@ -48,13 +48,18 @@
                 <div class="cell" data-cell id=8></div>
             </div>
         </div>
+        <a href="#pickAsideSection" style="margin-bottom: 30px;" class="restartTheGameButton" id='restartTheGameButton' onclick="restartTheGame()">Restart the game</a>
+        <h1><span id='winnerText'></span></h1>
     </div>
     <div class="modalBox">
         <div id='myModal' class="modal">
             <div class='modalContent'>
-                <div><span class="closeModal" id='closeMyModal'>&times;</span></div>
+                <div class="modalClosingIcon"><span class="closeModal" id='closeMyModal'>&times;</span></div>
                 <h1 id='modalText'></h1>
-                <a href="#pickAsideSection" class="restartTheGameButton" id='restartTheGameButton' onclick="restartTheGame()">Restart the game</a>
+                <div>
+                    <a href="#pickAsideSection" class="restartTheGameButtonModal" id='restartTheGameButton' onclick="restartTheGame()">Restart the game</a>
+                </div>
+               
             </div>
         </div>
     </div>

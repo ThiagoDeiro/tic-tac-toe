@@ -1,32 +1,13 @@
-let allCell = document.querySelectorAll("[data-cell]");
-let xPlay = document.getElementById("xTurn");
-let oPlay = document.getElementById("oTurn");
-let turnText = document.getElementById("whosTurn");
-let spanTurn = document.getElementById("whosTurn");
-const winner = document.getElementById("winner");
-let xUnderline = document.getElementById("ifElementIsXStyle");
-let oUnderline = document.getElementById("ifElementIsOStyle");
+let allCells = document.querySelectorAll("[data-cell]");
+let xElement = document.getElementById("xTurn");
+let oElement = document.getElementById("oTurn");
 let restartButton = document.getElementById("restartTheGameButton");
-// Modal elements!!!
+
 let myModal = document.getElementById("myModal");
 let modalSpan = document.getElementById("closeMyModal", [0]);
 let modalText = document.getElementById("modalText");
 
-let spanX = document.createElement("span");
-let spanO = document.createElement("span");
-
-let player;
-let playerX;
-let playerO;
-
-let playerThatWasPicked;
-
-let xPosition = [];
-let oPosition = [];
-
-let hasAWinner;
-
-let winningPoss = [
+let allWinningPossibility = [
   [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
@@ -37,120 +18,161 @@ let winningPoss = [
   [2, 4, 6],
 ];
 
-xPlay.addEventListener("click", pickASide);
-oPlay.addEventListener("click", pickASide);
-
-allCell.forEach((cell) => {
-  cell.addEventListener("click", gamePlay);
+allCells.forEach((cell) => {
+  cell.addEventListener("click", cellPosition);
 });
 
-function pickASide(e) {
-  const side = e.target.textContent;
-  if (side === "X") {
-    playerX = side;
-    player = playerX;
-    playerThatWasPicked = "X";
-  } else if (side === "O") {
-    playerO = side;
-    player = playerO;
-    playerThatWasPicked = "O";
-  }
-  turnText.innerHTML = player === "X" ? "O" : "X";
+xElement.addEventListener("click", pickASide);
+oElement.addEventListener("click", pickASide);
 
-  if (playerThatWasPicked === "X") {
-    xUnderline.style.textDecoration = "none";
-    oUnderline.style.textDecoration = "underline";
-  } else if (playerThatWasPicked === "O") {
-    xUnderline.style.textDecoration = "underline";
-    oUnderline.style.textDecoration = "none";
+let hasAWinner = false;
+
+let player;
+let secondPlayer;
+
+let whoIsTheWinner;
+
+let xArray = [];
+let oArray = [];
+
+function pickASide(e) {
+  let picked = e.target.textContent;
+  player = picked;
+
+  if (player === "X") {
+    secondPlayer = "O";
+  } else if (player === "O") {
+    secondPlayer = "X";
+  }
+  turnUpdate();
+}
+
+function turnUpdate() {
+  let xTurn = document.getElementById("ifElementIsXStyle");
+  let oTurn = document.getElementById("ifElementIsOStyle");
+
+  if (player === "X") {
+    xTurn.style.textDecoration = "underline";
+  } else if (player === "O") {
+    oTurn.style.textDecoration = "underline";
+    console.log(oTurn);
   }
 }
 
-function gamePlay(e) {
-  e.preventDefault();
-  e.stopPropagation();
+function cellPosition(e) {
   const cell = e.target;
-  cell.removeEventListener("click", gamePlay);
-
-  const textX = "X is the winner";
-  const textO = "O is the winner";
-  const itsATie = "It's a tie";
-
-  player = player === "X" ? "O" : "X";
-  turnText.innerHTML = player === "X" ? "O" : "X";
+  cell.removeEventListener("click", cellPosition);
+  if (hasAWinner == true) {
+    allCells.removeEventListener("click", cellPosition);
+  } else if (player === "" || player === undefined) {
+    winnerModalAppear("Please choose a winner");
+    allCells.removeEventListener("click", cellPosition);
+  }
   cell.innerHTML = player;
 
-  if (turnText.textContent === "X") {
-    xUnderline.style.textDecoration = "underline";
-    oUnderline.style.textDecoration = "none";
-  } else if (turnText.textContent === "O") {
-    xUnderline.style.textDecoration = "none";
-    oUnderline.style.textDecoration = "underline";
+  if (player === "X") {
+    xArray.push(cell.id);
+  } else if (player === "O") {
+    oArray.push(cell.id);
   }
 
-  if (cell.textContent === "X") {
-    xPosition.push(cell.id);
-    console.log(xPosition);
-  } else if (cell.textContent === "O") {
-    oPosition.push(cell.id);
-    console.log(oPosition);
+  if (hasAWinner !== true) {
+    findAWinner();
+    setTimeout(() => {
+      machineTurn();
+    }, 300);
+  } else if (hasAWinner == true) {
+    return hasAWinner;
   }
+}
 
-  if (xPosition.length >= 3 || oPosition.length >= 3) {
-    let numberArrX = xPosition.map((i) => Number(i));
-    let numberArrO = oPosition.map((i) => Number(i));
-    for (let j = 0; j < winningPoss.length; j++) {
-      if (winningPoss[j].every((i) => numberArrX.includes(i))) {
+function findAWinner() {
+  let textForTheWinner = document.getElementById("winnerText");
+  if (xArray.length >= 2 || oArray.length >= 2) {
+    let numberArrX = xArray.map((i) => Number(i));
+    let numberArrO = oArray.map((i) => Number(i));
+
+    for (let j = 0; j < allWinningPossibility.length; j++) {
+      if (allWinningPossibility[j].every((i) => numberArrX.includes(i))) {
         hasAWinner = true;
+        whoIsTheWinner = "X is the winner";
         setTimeout(() => {
-          checkWinner(textX);
+          console.log(whoIsTheWinner);
+          textForTheWinner.innerHTML = whoIsTheWinner;
+          return winnerModalAppear(whoIsTheWinner);
         }, 500);
-      } else if (winningPoss[j].every((i) => numberArrO.includes(i))) {
+      } else if (
+        allWinningPossibility[j].every((i) => numberArrO.includes(i))
+      ) {
         hasAWinner = true;
+        whoIsTheWinner = "O is the winner";
         setTimeout(() => {
-          checkWinner(textO);
+          console.log(whoIsTheWinner);
+          textForTheWinner.innerHTML = whoIsTheWinner;
+          return winnerModalAppear(whoIsTheWinner);
         }, 500);
       } else if (
         numberArrX.length >= 5 &&
-        !winningPoss[j].every(
-          (r) =>
-            numberArrX.includes(r) ||
-            (oPosition.length >= 3 &&
-              winningPoss[j].every((r) => numberArrO.includes(r)))
-        )
+        !allWinningPossibility[j].every((i) => !numberArrX.includes(i)) &&
+        numberArrO.length >= 3 &&
+        !allWinningPossibility[j].every((i) => !numberArrO.includes(i))
       ) {
         hasAWinner = true;
+        whoIsTheWinner = "it's a tie";
         setTimeout(() => {
-          checkWinner(itsATie);
+          console.log(whoIsTheWinner);
+          textForTheWinner.innerHTML = whoIsTheWinner;
+          return winnerModalAppear(whoIsTheWinner);
         }, 500);
       } else if (
         numberArrO.length >= 5 &&
-        !winningPoss[j].every(
-          (r) =>
-            numberArrO.includes(r) ||
-            (numberArrX.length >= 3 &&
-              winningPoss[j].every((r) => numberArrX.includes(r)))
-        )
+        !allWinningPossibility[j].every((i) => !numberArrO.includes(i)) &&
+        numberArrX.length >= 3 &&
+        !allWinningPossibility[j].every((i) => !numberArrX.includes(i))
       ) {
         hasAWinner = true;
+        whoIsTheWinner = "it's a tie";
         setTimeout(() => {
-          checkWinner(itsATie);
+          console.log(whoIsTheWinner);
+          textForTheWinner.innerHTML = whoIsTheWinner;
+          return winnerModalAppear(whoIsTheWinner);
         }, 500);
       }
     }
   }
-  // this if statement is to check if we have a winner and if we do remove onclick event from all cells!
-  if (hasAWinner === true) {
-    allCell.forEach((cell) => {
-      cell.removeEventListener("click", gamePlay);
-    });
+}
+
+function machineTurn() {
+  var item = allCells[Math.floor(Math.random() * allCells.length)];
+  console.log(item);
+  if (item.textContent === "" && hasAWinner !== true) {
+    item.innerHTML = secondPlayer;
+    if (secondPlayer === "X") {
+      xArray.push(item.id);
+      findAWinner();
+    } else if (secondPlayer === "O") {
+      oArray.push(item.id);
+      findAWinner();
+    }
+  } else if (item.textContent !== "" && hasAWinner !== true) {
+    setTimeout(() => {
+      machineTurn();
+    }, 500);
+  } else if (hasAWinner === true) {
+    item.removeEventListener("click", machineTurn);
+    item.removeEventListener("change", machineTurn);
+  }
+  if (item.textContent === secondPlayer) {
+    console.log(item);
+    item.removeEventListener("click", cellPosition);
   }
 }
 
-function checkWinner(text) {
+function winnerModalAppear(text) {
   modalText.innerHTML = text;
   return (myModal.style.display = "block");
 }
+
 modalSpan.onclick = function () {
   myModal.style.display = "none";
 };

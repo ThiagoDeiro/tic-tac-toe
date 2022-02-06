@@ -60,6 +60,7 @@ a {
 .pickASideTitle {
   font-size: 5rem;
 }
+
 .pickASideText {
   font-size: 5rem;
   margin: 20px;
@@ -73,6 +74,7 @@ a {
   height: 100vh;
   width: 100vw;
   align-items: center;
+  flex-direction: column;
 }
 .gameBoardSectionPosition {
   text-align: center;
@@ -104,6 +106,9 @@ a {
 
 .gameBoard > div {
   text-align: center;
+  /* background-image: url("Remove\ background.png"); */
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   background-color: #a5ffff;
   font-size: 5rem;
   color: black;
@@ -113,8 +118,32 @@ a {
 
 .gameBoard > div:nth-child() {
   background: ddd;
+  text-align: center;
 }
-
+.restartTheGameButton {
+  color: black;
+  border: 3px solid black;
+  background-color: rgb(222, 222, 222);
+  box-shadow: 2px 3px 8px -1px rgb(12, 12, 12);
+  width: 200px;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+}
+.restartTheGameButton:hover {
+  color: black;
+  border: 3px solid black;
+  background-color: rgb(222, 222, 222);
+  box-shadow: 2px 3px 5px -3px rgb(12, 12, 12);
+  width: 195px;
+  font-size: 18px;
+  font-weight: 400;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+}
 /* Modal css below */
 
 .modalBox {
@@ -151,6 +180,11 @@ a {
   font-size: 28px;
   font-weight: bold;
 }
+.modalClosingIcon {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
 
 .closeModal:hover,
 .closeModal:focus {
@@ -158,7 +192,7 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
-.restartTheGameButton {
+.restartTheGameButtonModal {
   border: 3px solid black;
   background-color: lightgray;
   box-shadow: 2px 3px 8px -1px rgb(12, 12, 12);
@@ -167,8 +201,9 @@ a {
   font-weight: 400;
   padding: 5px;
   text-align: center;
+  text-decoration: none;
 }
-.restartTheGameButton:hover {
+.restartTheGameButtonModal:hover {
   cursor: pointer;
   border: 3px solid black;
   background-color: lightgray;
