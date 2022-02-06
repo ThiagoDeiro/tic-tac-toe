@@ -214,3 +214,28 @@ a {
   padding: 5px;
   text-align: center;
 }
+
+@media (min-width: 320px) and (max-width: 500px) {
+  .header {
+    font-size: 1rem;
+  }
+  .startButton {
+    font-size: 4rem;
+  }
+  .buttonText {
+    font-size: 2rem;
+  }
+  .pickASideTitle {
+    font-size: 4rem;
+  }
+  .pickASideText {
+    font-size: 3.8rem;
+  }
+  .gameBoard {
+    grid-template-columns: 28vw 28vw 28vw;
+    grid-template-rows: 20vh 20vh 20vh;
+  }
+  .modalContent {
+    width: 80%;
+  }
+}
