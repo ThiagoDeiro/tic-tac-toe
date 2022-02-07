@@ -37,6 +37,7 @@ let oArray = [];
 
 function pickASide(e) {
   let picked = e.target.textContent;
+  console.log(picked);
   player = picked;
 
   if (player === "X") {
@@ -53,19 +54,21 @@ function turnUpdate() {
 
   if (player === "X") {
     xTurn.style.textDecoration = "underline";
+    oTurn.style.textDecoration = "none";
   } else if (player === "O") {
     oTurn.style.textDecoration = "underline";
-    console.log(oTurn);
+    xTurn.style.textDecoration = "none";
   }
 }
 
 function cellPosition(e) {
   const cell = e.target;
+  console.log(cell);
   cell.removeEventListener("click", cellPosition);
   if (hasAWinner == true) {
     allCells.removeEventListener("click", cellPosition);
   } else if (player === "" || player === undefined) {
-    winnerModalAppear("Please choose a winner");
+    winnerModalAppear("Please choose a side");
     allCells.removeEventListener("click", cellPosition);
   }
   cell.innerHTML = player;
@@ -100,7 +103,7 @@ function findAWinner() {
           console.log(whoIsTheWinner);
           textForTheWinner.innerHTML = whoIsTheWinner;
           return winnerModalAppear(whoIsTheWinner);
-        }, 500);
+        }, 300);
       } else if (
         allWinningPossibility[j].every((i) => numberArrO.includes(i))
       ) {
@@ -110,7 +113,7 @@ function findAWinner() {
           console.log(whoIsTheWinner);
           textForTheWinner.innerHTML = whoIsTheWinner;
           return winnerModalAppear(whoIsTheWinner);
-        }, 500);
+        }, 300);
       } else if (
         numberArrX.length >= 5 &&
         !allWinningPossibility[j].every((i) => !numberArrX.includes(i)) &&
